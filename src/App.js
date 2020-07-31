@@ -3,8 +3,11 @@ import './App.css';
 import {
   FormControl, 
   Select,
-  MenuItem} from '@material-ui/core';
+  MenuItem,
+  Card,
+  CardContent} from '@material-ui/core';
 import InfoBox from "./components/InfoBox"
+import Map from "./components/Map"
 
 function App() {
   //state populated with api countries
@@ -13,12 +16,39 @@ function App() {
   //state for setting the dropdown value
   const [selected, setSelected]=useState('worldwide');
 
+  //State for Country Information
+  const [countryInfo, setCountryInfo] = useState({})
+
   //set selected, give functionality to onchange
   const onSelectionChange = async(event) => {
     const countryCode = event.target.value;
-    setSelected(countryCode)
+    const url = countryCode === 'worldwide' ? 'https://disease.sh/v3/covid-19/all' :
+     `https://disease.sh/v3/covid-19/countries/${countryCode}`
+  
+    await fetch(url)
+    .then(response => response.json())
+    .then(data=> {
+      setSelected(countryCode)
+      setCountryInfo(data)     
+      console.log(countryInfo) 
+    })
   }
 
+  //Fetches worldwide covid data and sets it 
+  //to country info state on page load
+  useEffect(() =>
+  {
+    const worldData = async() =>{
+      await fetch("https://disease.sh/v3/covid-19/all")
+      .then((response)=> response.json())
+      .then((data)=>{
+        setCountryInfo(data)
+      })
+    };
+    worldData()
+  },[])
+
+  //Loads country codes into state when page loads
   useEffect(()=>{
     //async to get data 
     const countriesData = async() =>{
@@ -41,28 +71,40 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__header">
-        <h1>Covid-19 Tracker</h1>
-        <FormControl className="app__dropdown">
-          <Select
-          varient="outline"
-          value={selected}
-          onChange={onSelectionChange} >
-          <MenuItem value="worldwide">Worldwide</MenuItem>
-            {
-              countries.map((country) => (
-                <MenuItem value ={country.value}>{country.name}</MenuItem>
-                )
-              )}
-          </Select>
-        </FormControl>
+      <div className="app__left">
+        <div className="app__header">
+          <h1>Covid-19 Tracker</h1>
+          <FormControl className="app__dropdown">
+            <Select
+            varient="outline"
+            value={selected}
+            onChange={onSelectionChange} >
+            <MenuItem value="worldwide">Worldwide</MenuItem>
+              {
+                countries.map((country) => (
+                  <MenuItem value ={country.value}>{country.name}</MenuItem>
+                  )
+                )}
+            </Select>
+          </FormControl>
+        </div>
+    
+        <div className="app__stats">
+          <InfoBox title="Cases" total={countryInfo.cases} cases={countryInfo.todayCases}/>
+          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered}/>
+          <InfoBox title="Deaths" total={countryInfo.deaths} cases={countryInfo.todayDeaths}/>
+        </div>
+    
+        <div className="app__map">
+          <Map />
+        </div>
       </div>
-  
-      <div className="app__stats">
-        <InfoBox title="Cases" total={5000} cases={5000}/>
-        <InfoBox title="Recovered" total={5000} cases={5000}/>
-        <InfoBox title="Deaths" total={5000} cases={5000}/>
-      </div>
+      <Card className="app__right">
+        <CardContent>
+          <h3>idide</h3>
+          <h3>jdh</h3>
+        </CardContent>
+      </Card>            
     </div>
   );
 }
