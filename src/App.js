@@ -57,7 +57,7 @@ function App() {
           </Select>
         </FormControl>
       </div>
-      
+  
       <div className="app__stats">
         <InfoBox title="Cases" total={5000} cases={5000}/>
         <InfoBox title="Recovered" total={5000} cases={5000}/>
