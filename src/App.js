@@ -5,7 +5,8 @@ import {
   Select,
   MenuItem,
   Card,
-  CardContent} from '@material-ui/core';
+  CardContent,
+  Table} from '@material-ui/core';
 import InfoBox from "./components/InfoBox"
 import Map from "./components/Map"
 
@@ -18,6 +19,9 @@ function App() {
 
   //State for Country Information
   const [countryInfo, setCountryInfo] = useState({})
+
+  //State for Table Data
+  const [tableData, setTableData]= useState([])
 
   //set selected, give functionality to onchange
   const onSelectionChange = async(event) => {
@@ -63,6 +67,7 @@ function App() {
           }));
         //set state countries
         setCountries(countries);
+        setTableData(data);
        })
     };
     //call sub function
@@ -101,7 +106,7 @@ function App() {
       </div>
       <Card className="app__right">
         <CardContent>
-          <h3>idide</h3>
+          <h3>Live Cases by Country</h3>
           <h3>jdh</h3>
         </CardContent>
       </Card>            
