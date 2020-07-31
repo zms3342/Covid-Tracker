@@ -6,7 +6,17 @@ import {
   MenuItem} from '@material-ui/core';
 
 function App() {
+  //state populated with api countries
   const [countries, setCountries] =useState([])
+
+  //state for setting the dropdown value
+  const [selected, setSelected]=useState('worldwide');
+
+  //set selected, give functionality to onchange
+  const onSelectionChange = async(event) => {
+    const countryCode = event.target.value;
+    setSelected(countryCode)
+  }
 
   useEffect(()=>{
     //async to get data 
@@ -27,6 +37,7 @@ function App() {
     //call sub function
     countriesData();
   }, []);
+
   return (
     <div className="app">
       <div className="app__header">
@@ -34,8 +45,9 @@ function App() {
       <FormControl className="app__dropdown">
         <Select
         varient="outline"
-        value="worldwide"
-        onChange="" >
+        value={selected}
+        onChange={onSelectionChange} >
+        <MenuItem value="worldwide">Worldwide</MenuItem>
           {
             countries.map((country) => (
               <MenuItem value ={country.value}>{country.name}</MenuItem>
