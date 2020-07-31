@@ -5,10 +5,10 @@ import {
   Select,
   MenuItem,
   Card,
-  CardContent,
-  Table} from '@material-ui/core';
+  CardContent,} from '@material-ui/core';
 import InfoBox from "./components/InfoBox"
 import Map from "./components/Map"
+import Table from "./components/Table"
 
 function App() {
   //state populated with api countries
@@ -107,7 +107,8 @@ function App() {
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by Country</h3>
-          <h3>jdh</h3>
+          <Table countries={tableData} />
+          <h3>Wordlwide New Cases</h3>
         </CardContent>
       </Card>            
     </div>
