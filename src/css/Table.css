@@ -7,7 +7,7 @@
 }
 
 .table tr:nth-of-type(odd){
-    background-color: #f3f2f8;
+    background-color: rgba(91, 117, 148, 0.178);
 }
 .table td{
     padding: 0.5rem;
