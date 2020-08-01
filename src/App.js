@@ -11,6 +11,8 @@ import Map from "./components/Map"
 import Table from "./components/Table"
 import LineGraph from "./components/LineGraph"
 import {sortData} from "./util"
+import "leaflet/dist/leaflet.css";
+
 
 function App() {
   //state populated with api countries
@@ -25,6 +27,12 @@ function App() {
   //State for Table Data
   const [tableData, setTableData]= useState([])
 
+  //Map center State
+  const [center, setCenter]= useState({lat:34.80746, lng:10.4796});
+
+  //Map zoom State
+  const [zoom, setZoom] = useState(2)
+
   //set selected, give functionality to onchange
   const onSelectionChange = async(event) => {
     const countryCode = event.target.value;
@@ -36,7 +44,8 @@ function App() {
     .then(data=> {
       setSelected(countryCode)
       setCountryInfo(data)     
-      console.log(countryInfo) 
+      setCenter([data.countryInfo.lat, data.countryInfo.long])
+      setZoom(4)
     })
   }
 
@@ -104,7 +113,8 @@ function App() {
         </div>
     
         <div className="app__map">
-          <Map />
+          <Map center={center}
+          zoom={zoom} />
         </div>
       </div>
       <Card className="app__right">
