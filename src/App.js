@@ -9,6 +9,7 @@ import {
 import InfoBox from "./components/InfoBox"
 import Map from "./components/Map"
 import Table from "./components/Table"
+import {sortData} from "./util"
 
 function App() {
   //state populated with api countries
@@ -66,8 +67,9 @@ function App() {
             value: country.countryInfo.iso2,
           }));
         //set state countries
+        const sortedData = sortData(data);
         setCountries(countries);
-        setTableData(data);
+        setTableData(sortedData);
        })
     };
     //call sub function
