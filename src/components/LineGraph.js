@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Line} from 'react-chartjs-2'
 import numeral from "numeral"
+import '../css/LineGraph.css'
 
 const options ={
     legend:{
@@ -55,7 +56,7 @@ function LineGraph({casesType = 'cases'}) {
 
     // set x to the data and y to the date's case delta
     //cases type set to deaths or recovered will render that data
-    const formatChartData = (data, casesType='cases') =>{
+    const formatChartData = (data, casesType) =>{
         let chartData=[]
         let lastDataPoint; 
         for (let date in data.cases){
@@ -77,7 +78,7 @@ function LineGraph({casesType = 'cases'}) {
             await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
             .then(response => response.json())
             .then((data) =>{
-                const chartData = formatChartData(data, 'cases');
+                const chartData = formatChartData(data, casesType);
                 setChartData(chartData)
             })
         };
@@ -94,8 +95,8 @@ function LineGraph({casesType = 'cases'}) {
                     datasets:[
                     {
                         data: chartData,
-                        backgroundColor: "rgba(245, 209, 195,0.5)",
-                        borderColor: "#FEB89F"
+                        backgroundColor: "rgba(91, 117, 148,0.5)",
+                        borderColor: "#5B7594",
                     },],
                 }} />
             )}
