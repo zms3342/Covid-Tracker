@@ -10,7 +10,7 @@ import InfoBox from "./components/InfoBox"
 import Map from "./components/Map"
 import Table from "./components/Table"
 import LineGraph from "./components/LineGraph"
-import {sortData} from "./util"
+import {sortData, prettyPrint} from "./util"
 import "leaflet/dist/leaflet.css";
 
 
@@ -32,6 +32,13 @@ function App() {
 
   //Map zoom State
   const [zoom, setZoom] = useState(2)
+
+  //map Countries
+  const [mapCountries, setMapCountries]= useState([])
+
+  //state for change on recovered/deaths etc.
+  const [type, setType] = useState("cases")
+
 
   //set selected, give functionality to onchange
   const onSelectionChange = async(event) => {
@@ -79,6 +86,7 @@ function App() {
         //set state countries
         const sortedData = sortData(data);
         setCountries(countries);
+        setMapCountries(data)
         setTableData(sortedData);
        })
     };
@@ -107,22 +115,41 @@ function App() {
         </div>
     
         <div className="app__stats">
-          <InfoBox title="Cases" total={countryInfo.cases} cases={countryInfo.todayCases}/>
-          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered}/>
-          <InfoBox title="Deaths" total={countryInfo.deaths} cases={countryInfo.todayDeaths}/>
+          <InfoBox 
+          active={type==='cases'}
+          onClick = {e => setType('cases')}
+          title="Cases" 
+          total={prettyPrint(countryInfo.cases)} 
+          cases={prettyPrint(countryInfo.todayCases)}/>
+
+          <InfoBox active={type==='recovered'}
+          onClick= {e => setType('recovered')}
+          title="Recovered"
+          total={prettyPrint(countryInfo.recovered)}
+          cases={prettyPrint(countryInfo.todayRecovered)}/>
+
+          <InfoBox 
+          active={type==='deaths'}
+          onClick={e => setType('deaths')}
+          title="Deaths"
+          total={prettyPrint(countryInfo.deaths)}
+          cases={prettyPrint(countryInfo.todayDeaths)}/>
         </div>
     
         <div className="app__map">
-          <Map center={center}
-          zoom={zoom} />
+          <Map 
+          countries={mapCountries}
+          center={center}
+          zoom={zoom}
+          casesType={type} />
         </div>
       </div>
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by Country</h3>
           <Table countries={tableData} />
-          <h3>Wordlwide New Cases</h3>
-          <LineGraph />
+          <h3 className="app__graphTitle">Wordlwide new {type}</h3>
+          <LineGraph casesType={type} />
         </CardContent>
       </Card>            
     </div>
