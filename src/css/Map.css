@@ -10,3 +10,30 @@
 .map .leaflet-container { 
     height:100%;
 }
+
+.info-container{
+    width: 200px;
+}
+
+.info-name{
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+}
+
+.info-deaths {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.info-recovered {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.info-cases {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+
