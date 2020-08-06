@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
 *{
   margin: 0;
+  font-family:'Gruppo', cursive;;
 }
 body{
   background-color: #F7F3F0;
 }
+
 .app{
   display: flex;
   justify-content: space-evenly;
@@ -25,14 +28,37 @@ body{
 .app__left{
   flex: 0.9;
 }
+/* .app__right{
+  display: flex;
+  flex-direction: column;
+} */
+
 
 @media (max-width:990px){
   .app{
     flex-direction: column;
   }
+
+
 }
 
 .app__graphTitle{
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.app__header > h1{
+  background-color: #FF5F4D;
+  color: white;
+  padding:10px;
+  font-weight: 800;
+}
+
+@media (max-width: 415px)
+{
+  .app__header > h1{
+    /* padding:0px;
+    color:#FF5F4D;
+    background-color:#F7F3F0 ; */
+    font-size: 1rem;
+  }
 }
